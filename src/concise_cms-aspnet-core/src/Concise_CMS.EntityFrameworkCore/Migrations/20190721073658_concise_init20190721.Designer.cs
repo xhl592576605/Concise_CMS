@@ -3,14 +3,16 @@ using System;
 using Concise_CMS.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Concise_CMS.Migrations
 {
     [DbContext(typeof(Concise_CMSDbContext))]
-    partial class Concise_CMSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190721073658_concise_init20190721")]
+    partial class concise_init20190721
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
