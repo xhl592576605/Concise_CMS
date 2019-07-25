@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
@@ -6,7 +6,7 @@
     <AssemblyName>Concise_CMS.Web.Host</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageId>Concise_CMS.Web.Host</PackageId>
-    <UserSecretsId>LTMCompanyNameFree-Concise_CMS-56C2EF2F-ABD6-4EFC-AAF2-2E81C34E8FB1</UserSecretsId>
+    <UserSecretsId>LTMCompanyNameFree-Concise_CMS-56C2EF2F-ABD6-4EFC-AAF2-2E81C34E8FB1</UserSecretsId> 
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="wwwroot\swagger\ui\index.html" />
