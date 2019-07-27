@@ -289,3 +289,5 @@ __pycache__/
 /src/concise_cms-aspnet-core/src/Concise_CMS.Web.MVC/wwwroot/lib
 /src/concise_cms-aspnet-core/src/Concise_CMS.Web.Host/App_Data/
 /src/concise_cms-aspnet-core/src/Concise_CMS.Web.Mvc/App_Data/
+/src/concise_cms-vue/dist/
+/src/concise_cms-vue/node_modules/
