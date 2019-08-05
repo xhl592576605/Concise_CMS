@@ -10,6 +10,10 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <RootNamespace>Concise_CMS</RootNamespace>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>E:\HANS_x\HANSABP\Concise_CMS\src\concise_cms-aspnet-core\src\Concise_CMS.Application\Concise_CMS.Application.xml</DocumentationFile>
+    <OutputPath>bin\Debug\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Concise_CMS.Core\Concise_CMS.Core.csproj" />
   </ItemGroup>

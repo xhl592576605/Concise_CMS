@@ -16,6 +16,7 @@ using Concise_CMS.Configuration;
 using Concise_CMS.Identity;
 
 using Abp.AspNetCore.SignalR.Hubs;
+using System.IO;
 
 namespace Concise_CMS.Web.Host.Startup
 {
@@ -74,6 +75,8 @@ namespace Concise_CMS.Web.Host.Startup
                     In = "header",
                     Type = "apiKey"
                 });
+                options.CustomSchemaIds(type => type.FullName); // 解决相同类名会报错的问题
+               // options.IncludeXmlComments(Path.Combine(Directory.GetCurrentDirectory(), "Concise_CMS.Application.xml"));
             });
 
             // Configure Abp and Dependency Injection
@@ -122,6 +125,7 @@ namespace Concise_CMS.Web.Host.Startup
                 options.SwaggerEndpoint(_appConfiguration["App:ServerRootAddress"].EnsureEndsWith('/') + "swagger/v1/swagger.json", "Concise_CMS API V1");
                 options.IndexStream = () => Assembly.GetExecutingAssembly()
                     .GetManifestResourceStream("Concise_CMS.Web.Host.wwwroot.swagger.ui.index.html");
+               // options.InjectJavascript("Concise_CMS.Web.Host.wwwroot.swagger.ui.swagger_translator.js");
             }); // URL: /swagger
         }
     }

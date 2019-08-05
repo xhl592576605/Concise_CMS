@@ -88,8 +88,14 @@ export const constantRoutes = [
         meta: { title: 'Form', icon: 'form' }
       }
     ]
-  },
+  }
+]
 
+/**
+ * asyncRoutes
+ * the routes that need to be dynamically loaded based on user roles
+ */
+export const asyncRoutes = [
   {
     path: '/nested',
     component: Layout,
@@ -155,6 +161,31 @@ export const constantRoutes = [
       {
         path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
         meta: { title: 'External Link', icon: 'link' }
+      }
+    ]
+  },
+
+  {
+    path: '/rbac',
+    component: Layout,
+    redirect: '/rbac/user',
+    name: '权限控制',
+    meta: {
+      title: '权限控制',
+      icon: 'dashboard'
+    },
+    children: [
+      {
+        path: 'user',
+        component: () => import('@/views/nested/menu2/index'),
+        name: '用户管理',
+        meta: { title: '用户管理' }
+      },
+      {
+        path: 'role',
+        component: () => import('@/views/nested/menu2/index'),
+        name: '角色管理',
+        meta: { title: '角色管理' }
       }
     ]
   },

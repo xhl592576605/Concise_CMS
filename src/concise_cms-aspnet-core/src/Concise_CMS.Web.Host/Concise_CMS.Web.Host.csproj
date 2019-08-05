@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="wwwroot\swagger\ui\index.html" />
+    <Content Remove="wwwroot\swagger\ui\swagger_translator.js" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -46,5 +47,6 @@
     <EmbeddedResource Include="wwwroot\swagger\ui\index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="wwwroot\swagger\ui\swagger_translator.js" />
   </ItemGroup>
 </Project>

@@ -34,8 +34,8 @@ var abp = abp || {};
          * Sets a cookie value for given key.
          * This is a simple implementation created to be used by ABP.
          * Please use a complete cookie library if you need.
-         * @param {string} key
-         * @param {string} value
+         * @param {string} key key
+         * @param {string} value value
          * @param {Date} expireDate (optional). If not specified the cookie will expire at the end of session.
          * @param {string} path (optional)
          */
@@ -61,7 +61,7 @@ var abp = abp || {};
      * Gets a cookie with given key.
      * This is a simple implementation created to be used by ABP.
      * Please use a complete cookie library if you need.
-     * @param {string} key
+     * @param {string} key key
      * @returns {string} Cookie value or null
      */
     abp.utils.getCookieValue = function (key) {
@@ -72,7 +72,7 @@ var abp = abp || {};
             }
 
             var splitted = equalities[i].split('=');
-            if (splitted.length != 2) {
+            if (splitted.length !== 2) {
                 continue;
             }
 
@@ -88,7 +88,7 @@ var abp = abp || {};
      * Deletes cookie for given key.
      * This is a simple implementation created to be used by ABP.
      * Please use a complete cookie library if you need.
-     * @param {string} key
+     * @param {string} key key
      * @param {string} path (optional)
      */
     abp.utils.deleteCookie = function (key, path) {

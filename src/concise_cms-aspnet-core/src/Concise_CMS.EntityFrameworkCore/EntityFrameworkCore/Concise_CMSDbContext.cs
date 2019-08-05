@@ -14,5 +14,11 @@ namespace Concise_CMS.EntityFrameworkCore
             : base(options)
         {
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // 设置表的前缀
+            modelBuilder.ChangeAbpTablePrefix<Tenant, Role, User>("concise_");
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }
