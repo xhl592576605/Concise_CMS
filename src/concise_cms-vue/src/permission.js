@@ -68,6 +68,7 @@ router.beforeEach(async(to, from, next) => {
 })
 
 router.afterEach(() => {
+  store.dispatch('settings/changeSetting', store.getters.settings)
   // finish progress bar
   NProgress.done()
 })
