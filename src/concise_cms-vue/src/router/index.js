@@ -64,8 +64,44 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+      meta: { title: '面板', icon: 'dashboard', affix: true }
     }]
+  },
+  {
+    path: '/rbac',
+    component: Layout,
+    redirect: '/rbac/tenant',
+    name: 'rbac',
+    meta: {
+      title: '权限管理',
+      icon: 'rbac'
+    },
+    children: [
+      {
+        path: 'tenant',
+        component: () => import('@/views/rbac/tenant/index'),
+        name: 'tenant',
+        meta: { title: '租户管理', icon: 'peoples' }
+      },
+      {
+        path: 'user',
+        component: () => import('@/views/nested/menu2/index'),
+        name: 'user',
+        meta: { title: '用户管理', icon: 'user' }
+      },
+      {
+        path: 'role',
+        component: () => import('@/views/nested/menu2/index'),
+        name: 'role',
+        meta: { title: '角色管理', icon: 'role' }
+      },
+      {
+        path: 'menu',
+        component: () => import('@/views/nested/menu2/index'),
+        name: 'menu',
+        meta: { title: '菜单管理', icon: 'menu' }
+      }
+    ]
   },
   {
     path: '/error-log',
@@ -186,31 +222,6 @@ export const asyncRoutes = [
       {
         path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
         meta: { title: 'External Link', icon: 'link' }
-      }
-    ]
-  },
-
-  {
-    path: '/rbac',
-    component: Layout,
-    redirect: '/rbac/user',
-    name: '权限控制',
-    meta: {
-      title: '权限控制',
-      icon: 'dashboard'
-    },
-    children: [
-      {
-        path: 'user',
-        component: () => import('@/views/nested/menu2/index'),
-        name: '用户管理',
-        meta: { title: '用户管理' }
-      },
-      {
-        path: 'role',
-        component: () => import('@/views/nested/menu2/index'),
-        name: '角色管理',
-        meta: { title: '角色管理' }
       }
     ]
   },

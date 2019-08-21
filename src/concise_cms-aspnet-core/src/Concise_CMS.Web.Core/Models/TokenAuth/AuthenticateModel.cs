@@ -13,6 +13,7 @@ namespace Concise_CMS.Models.TokenAuth
         [StringLength(AbpUserBase.MaxPlainPasswordLength)]
         public string Password { get; set; }
         
+        public string TenancyName { get; set; }
         public bool RememberClient { get; set; }
     }
 }

@@ -1,6 +1,9 @@
 import { login, getInfo, getUser } from '@/api/user' // logout
+import { isTenantAvailable } from '@/api/tenant'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
+
+import { Message } from 'element-ui' // MessageBox
 
 const state = {
   token: getToken(),
@@ -27,19 +30,52 @@ const mutations = {
 const actions = {
   // user login
   login({ commit }, userInfo) {
-    const { usernameOrEmailAddress, password } = userInfo
+    const { tenancyName, usernameOrEmailAddress, password } = userInfo
     return new Promise((resolve, reject) => {
-      login({ usernameOrEmailAddress: usernameOrEmailAddress.trim(), password: password }).then(response => {
-        const { result } = response
-        commit('SET_TOKEN', result.accessToken)
-        setToken(result.accessToken,
-          {
-            expires: new Date(new Date().getTime() + result.expireInSeconds * 1000) // 取现在的时间毫秒数+失效的秒数*1000=>失效日期
+      const login_data = { tenancyName: tenancyName, usernameOrEmailAddress: usernameOrEmailAddress.trim(), password: password }
+      //有租户需先验证租户
+      if (tenancyName !== '' && tenancyName != undefined) {
+        isTenantAvailable(tenancyName).then(response => {
+          const { result } = response
+          /**
+           * Available = 1,
+           * InActive = 2,
+           * NotFound =3 
+           */
+          if (result.state != '1') {
+            Message({
+              message: '租户不存在或已被停用',
+              type: 'error',
+              duration: 5 * 1000
+            })
+            reject()
+            return
+          }
+          login(login_data).then(response => {
+            const { result } = response
+            commit('SET_TOKEN', result.accessToken)
+            setToken(result.accessToken,
+              {
+                expires: new Date(new Date().getTime() + result.expireInSeconds * 1000) // 取现在的时间毫秒数+失效的秒数*1000=>失效日期
+              })
+            resolve()
+          }).catch(error => {
+            reject(error)
           })
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
+        })
+      } else {
+        login(login_data).then(response => {
+          const { result } = response
+          commit('SET_TOKEN', result.accessToken)
+          setToken(result.accessToken,
+            {
+              expires: new Date(new Date().getTime() + result.expireInSeconds * 1000) // 取现在的时间毫秒数+失效的秒数*1000=>失效日期
+            })
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
+      }
     })
   },
 

@@ -6,7 +6,7 @@ using Abp.MultiTenancy;
 namespace Concise_CMS.MultiTenancy.Dto
 {
     [AutoMapFrom(typeof(Tenant))]
-    public class TenantDto : EntityDto
+    public class TenantDto : AuditedEntityDto
     {
         [Required]
         [StringLength(AbpTenantBase.MaxTenancyNameLength)]
@@ -18,5 +18,9 @@ namespace Concise_CMS.MultiTenancy.Dto
         public string Name { get; set; }        
         
         public bool IsActive {get; set;}
+
+        [StringLength(AbpTenantBase.MaxConnectionStringLength)]
+        public string ConnectionString { get; set; }
+
     }
 }

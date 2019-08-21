@@ -55,7 +55,7 @@ service.interceptors.response.use(
 
       // TODO:判断token是否是失效，失效重新获取
 
-      errorMessage.message = `${res.error.message}(${res.error.details})`
+      errorMessage.message = `${res.error.message}(${res.error.details || '无详细信息'})`
       Message(errorMessage)
     } else {
       return res
@@ -100,7 +100,7 @@ service.interceptors.response.use(
       if (data.success) {
         errorMessage.type = 'success'
       }
-      errorMessage.message = `${data.error.message}(${data.error.details})`
+      errorMessage.message = `${data.error.message}(${data.error.details || '无详细信息'})`
     } else {
       errorMessage.message = error.message
     }
