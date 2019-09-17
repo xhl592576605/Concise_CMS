@@ -1,13 +1,9 @@
 <template>
   <div class="navbar">
-    <hamburger
-      :is-active="sidebar.opened"
-      class="hamburger-container"
-      @toggleClick="toggleSideBar"
-    />
+    <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
 
     <breadcrumb class="breadcrumb-container" />
-
+    <!-- <div class="tenant-container">当前租户：{{tenant.name||''}}</div> -->
     <div class="right-menu">
       <template v-if="device!=='mobile'">
         <search id="header-search" class="right-menu-item" />
@@ -63,7 +59,7 @@ export default {
     Search
   },
   computed: {
-    ...mapGetters(['sidebar', 'avatar', 'device'])
+    ...mapGetters(['sidebar', 'avatar', 'device', 'tenant'])
   },
   methods: {
     toggleSideBar() {
@@ -100,6 +96,14 @@ export default {
 
   .breadcrumb-container {
     float: left;
+  }
+  .tenant-container {
+    width: 600px;
+    margin:  0 auto;
+    display: inline-block;
+    line-height: 50px;
+    font-size: 14px;
+    text-align: center
   }
   .errLog-container {
     display: inline-block;

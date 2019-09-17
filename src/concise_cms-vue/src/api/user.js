@@ -43,7 +43,7 @@ export function createUser(data) {
 export function updateUser(data) {
   return request({
     url: '/services/app/User/Update',
-    method: 'post',
+    method: 'put',
     data
   })
 }
@@ -57,7 +57,6 @@ export function deleteUser(id) {
     }
   })
 }
-
 
 export function changePassword(data) {
   return request({
@@ -75,7 +74,7 @@ export function resetPassword(data) {
   })
 }
 
-export function GetAllUsers(params) {
+export function getAllUsers(params) {
   return request({
     url: `/services/app/User/GetAll`,
     method: 'get',

@@ -7,14 +7,19 @@ import { Message } from 'element-ui' // MessageBox
 
 const state = {
   token: getToken(),
+  id: '',
   name: '',
   avatar: '',
-  roles: []
+  roles: [],
+  tenant: {}
 }
 
 const mutations = {
   SET_TOKEN: (state, token) => {
     state.token = token
+  },
+  SET_ID: (state, id) => {
+    state.id = id
   },
   SET_NAME: (state, name) => {
     state.name = name
@@ -24,6 +29,9 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
+  },
+  SET_TENANT: (state, tenant) => {
+    state.tenant = tenant
   }
 }
 
@@ -33,16 +41,16 @@ const actions = {
     const { tenancyName, usernameOrEmailAddress, password } = userInfo
     return new Promise((resolve, reject) => {
       const login_data = { tenancyName: tenancyName, usernameOrEmailAddress: usernameOrEmailAddress.trim(), password: password }
-      //有租户需先验证租户
-      if (tenancyName !== '' && tenancyName != undefined) {
+      // 有租户需先验证租户
+      if (tenancyName !== '' && tenancyName !== undefined) {
         isTenantAvailable(tenancyName).then(response => {
           const { result } = response
           /**
            * Available = 1,
            * InActive = 2,
-           * NotFound =3 
+           * NotFound =3
            */
-          if (result.state != '1') {
+          if (result.state !== '1') {
             Message({
               message: '租户不存在或已被停用',
               type: 'error',
@@ -90,12 +98,13 @@ const actions = {
         }
 
         const { id } = result.user
-
+        commit('SET_TENANT', result.tenant)
         getUser(id).then(response => {
-          const { userName, roleNames, avatar } = response.result
+          const { id, userName, roleNames, avatar } = response.result
           if (!roleNames || roleNames.length <= 0) {
             reject('getInfo: roles must be a non-null array!')
           }
+          commit('SET_ID', id)
           commit('SET_ROLES', roleNames)
           commit('SET_NAME', userName)
           commit('SET_AVATAR', avatar || 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif')
@@ -112,8 +121,10 @@ const actions = {
   // user logout
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
+      commit('SET_ID', '')
       commit('SET_TOKEN', '')
       commit('SET_ROLES', [])
+      commit('SET_TENANT', {})
       removeToken()
       resetRouter()
       resolve()

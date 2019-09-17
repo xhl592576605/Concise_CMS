@@ -64,7 +64,7 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '面板', icon: 'dashboard', affix: true }
+      meta: { title: '首页', icon: 'dashboard', affix: true }
     }]
   },
   {
@@ -85,13 +85,13 @@ export const constantRoutes = [
       },
       {
         path: 'user',
-        component: () => import('@/views/nested/menu2/index'),
+        component: () => import('@/views/rbac/user/index'),
         name: 'user',
         meta: { title: '用户管理', icon: 'user' }
       },
       {
         path: 'role',
-        component: () => import('@/views/nested/menu2/index'),
+        component: () => import('@/views/rbac/role/index'),
         name: 'role',
         meta: { title: '角色管理', icon: 'role' }
       },
