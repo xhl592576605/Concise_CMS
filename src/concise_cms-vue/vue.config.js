@@ -26,7 +26,7 @@ module.exports = {
    */
   publicPath: '/',
   outputDir: 'dist',
-  assetsDir: 'static',
+  assetsDir: 'cCMSstatic',
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
   devServer: {
@@ -36,6 +36,7 @@ module.exports = {
       warnings: false,
       errors: true
     },
+    disableHostCheck:true, 
     proxy: {
       // change xxx-api/login => mock/login
       // detail: https://cli.vuejs.org/config/#devserver-proxy

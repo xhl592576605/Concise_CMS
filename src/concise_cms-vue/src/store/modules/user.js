@@ -50,7 +50,7 @@ const actions = {
            * InActive = 2,
            * NotFound =3
            */
-          if (result.state !== '1') {
+          if (result.state.toString() !== '1') {
             Message({
               message: '租户不存在或已被停用',
               type: 'error',

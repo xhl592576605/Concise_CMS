@@ -68,42 +68,6 @@ export const constantRoutes = [
     }]
   },
   {
-    path: '/rbac',
-    component: Layout,
-    redirect: '/rbac/tenant',
-    name: 'rbac',
-    meta: {
-      title: '权限管理',
-      icon: 'rbac'
-    },
-    children: [
-      {
-        path: 'tenant',
-        component: () => import('@/views/rbac/tenant/index'),
-        name: 'tenant',
-        meta: { title: '租户管理', icon: 'peoples' }
-      },
-      {
-        path: 'user',
-        component: () => import('@/views/rbac/user/index'),
-        name: 'user',
-        meta: { title: '用户管理', icon: 'user' }
-      },
-      {
-        path: 'role',
-        component: () => import('@/views/rbac/role/index'),
-        name: 'role',
-        meta: { title: '角色管理', icon: 'role' }
-      },
-      {
-        path: 'menu',
-        component: () => import('@/views/nested/menu2/index'),
-        name: 'menu',
-        meta: { title: '菜单管理', icon: 'menu' }
-      }
-    ]
-  },
-  {
     path: '/error-log',
     component: Layout,
     children: [
@@ -157,77 +121,66 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   {
-    path: '/nested',
+    name: 'rbac',
+    path: '/rbac',
+    hidden: false,
     component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
+    redirect: '/rbac/tenant',
     meta: {
-      title: 'Nested',
-      icon: 'nested'
+      title: '权限管理',
+      icon: 'rbac'
     },
+    routeName: '权限管理',
+    description: '权限管理，设置用户权限等',
     children: [
       {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
+        name: 'tenant',
+        path: 'tenant',
+        hidden: false,
+        component: () => import('@/views/rbac/tenant/index'),
+        meta: { title: '租户管理', icon: 'peoples', roles: ['ADMIN'] },
+        routeName: '租户管理',
+        description: '添加，编辑，删除租户'
       },
       {
-        path: 'menu2',
-        name: 'Menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        meta: { title: 'menu2' }
-      }
-    ]
-  },
-
-  {
-    path: 'external-link',
-    component: Layout,
-    children: [
+        name: 'user',
+        path: 'user',
+        hidden: false,
+        component: () => import('@/views/rbac/user/index'),
+        meta: { title: '用户管理', icon: 'user', roles: ['ADMIN'] },
+        routeName: '用户管理',
+        description: '添加，编辑，删除租户用户'
+      },
       {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
+        name: 'role',
+        path: 'role',
+        hidden: false,
+        component: () => import('@/views/rbac/role/index'),
+        meta: { title: '角色管理', icon: 'role', roles: ['ADMIN'] },
+        routeName: '角色管理',
+        description: '添加，编辑，删除租户角色'
+      },
+      {
+        name: 'menu',
+        path: 'menu',
+        hidden: false,
+        component: () => import('@/views/rbac/asyncRouter/index'),
+        meta: { title: '菜单管理', icon: 'menu', roles: ['ADMIN'] },
+        routeName: '菜单管理',
+        description: '设置菜单的顺序，权限'
       }
     ]
   },
-
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  {
+    name: '404',
+    path: '*',
+    redirect: '/404',
+    hidden: true,
+    meta: { title: '404页面', icon: 'menu', roles: ['ADMIN'] },
+    routeName: '404',
+    description: ''
+  }
 ]
 
 const createRouter = () => new Router({

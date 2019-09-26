@@ -3,14 +3,16 @@ using System;
 using Concise_CMS.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Concise_CMS.Migrations
 {
     [DbContext(typeof(Concise_CMSDbContext))]
-    partial class Concise_CMSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190923154324_Concise_CMS_AsyncRoute7")]
+    partial class Concise_CMS_AsyncRoute7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -854,7 +856,7 @@ namespace Concise_CMS.Migrations
                     b.ToTable("concise_OrganizationUnitRoles");
                 });
 
-            modelBuilder.Entity("Concise_CMS.AsyncRouters.AsyncRoute", b =>
+            modelBuilder.Entity("Concise_CMS.AsyncRoutes.AsyncRoute", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -905,26 +907,7 @@ namespace Concise_CMS.Migrations
                     b.ToTable("concise_asyncroute");
                 });
 
-            modelBuilder.Entity("Concise_CMS.AsyncRouters.AsyncRouterMap", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Name")
-                        .IsRequired();
-
-                    b.Property<int>("Order");
-
-                    b.Property<string>("RolesStr");
-
-                    b.Property<int?>("TenantId");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("concise_asyncrouter_map");
-                });
-
-            modelBuilder.Entity("Concise_CMS.AsyncRouters.Meta", b =>
+            modelBuilder.Entity("Concise_CMS.AsyncRoutes.Meta", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
@@ -1267,13 +1250,13 @@ namespace Concise_CMS.Migrations
                         .HasForeignKey("ParentId");
                 });
 
-            modelBuilder.Entity("Concise_CMS.AsyncRouters.AsyncRoute", b =>
+            modelBuilder.Entity("Concise_CMS.AsyncRoutes.AsyncRoute", b =>
                 {
-                    b.HasOne("Concise_CMS.AsyncRouters.Meta", "Meta")
+                    b.HasOne("Concise_CMS.AsyncRoutes.Meta", "Meta")
                         .WithMany()
                         .HasForeignKey("MetaId");
 
-                    b.HasOne("Concise_CMS.AsyncRouters.AsyncRoute", "Parent")
+                    b.HasOne("Concise_CMS.AsyncRoutes.AsyncRoute", "Parent")
                         .WithMany("Children")
                         .HasForeignKey("ParentId");
                 });

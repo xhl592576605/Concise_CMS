@@ -1,3 +1,4 @@
+
 /**
  * Created by PanJiaChen on 16/11/18.
  */
@@ -348,3 +349,41 @@ export function removeClass(ele, cls) {
     ele.className = ele.className.replace(reg, ' ')
   }
 }
+
+/**
+ * 深度排序数组
+ * @param {Array} arr 排序数组
+ * @param {Array} props 排序字段
+ * @param {Array} orders 升序降序
+ * @param {Array} childProps 子字段排序
+ */
+export function deepOrderBy(arr, props, childProps, orders) {
+  const _arr = orderBy(arr, props, orders)
+  _arr.forEach(item => {
+    childProps.forEach(prop => {
+      if (item[prop] instanceof Array) {
+        item[prop] = deepOrderBy(item[prop], props, childProps, orders)
+      }
+    })
+  })
+  return _arr
+}
+
+/**
+ * 排序数组
+ * @param {Array} arr 排序数组
+ * @param {Array} props 排序字段
+ * @param {Array} orders 升序降序
+ */
+export function orderBy(arr, props, orders) {
+  return [...arr].sort((a, b) =>
+    props.reduce((acc, prop, i) => {
+      if (acc === 0) {
+        const [p1, p2] = orders && orders[i] === 'desc' ? [b[prop], a[prop]] : [a[prop], b[prop]]
+        acc = p1 > p2 ? 1 : p1 < p2 ? -1 : 0
+      }
+      return acc
+    }, 0)
+  )
+}
+

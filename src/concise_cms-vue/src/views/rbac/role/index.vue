@@ -3,11 +3,23 @@
     <div class="filter-container">
       <el-input v-model="listQuery.keyWord" placeholder="关键词" style="width: 200px;" class="filter-item" />
       <el-button v-waves class="filter-item" type="success" icon="el-icon-search" @click="handleFilter">搜索</el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit"
-        @click="handleCreate">添加</el-button>
+      <el-button
+        class="filter-item"
+        style="margin-left: 10px;"
+        type="primary"
+        icon="el-icon-edit"
+        @click="handleCreate"
+      >添加</el-button>
     </div>
-    <el-table :key="tableKey" v-loading="listLoading" :data="list" border fit highlight-current-row
-      style="width: 100%;">
+    <el-table
+      :key="tableKey"
+      v-loading="listLoading"
+      :data="list"
+      border
+      fit
+      highlight-current-row
+      style="width: 100%;"
+    >
       <el-table-column label="ID" prop="id" sortable="custom" align="center" width="80">
         <template slot-scope="scope">
           <span>{{ scope.row.id }}</span>
@@ -46,12 +58,24 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination v-show="total>0" :total="total" :float-right="true" :page.sync="listQuery.page"
-      :limit.sync="listQuery.maxResultCount" @pagination="getAllRoles" />
+    <pagination
+      v-show="total>0"
+      :total="total"
+      :float-right="true"
+      :page.sync="listQuery.page"
+      :limit.sync="listQuery.maxResultCount"
+      @pagination="getAllRoles"
+    />
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px"
-        style="width: 500px; margin-left:50px;">
+      <el-form
+        ref="dataForm"
+        :rules="rules"
+        :model="temp"
+        label-position="left"
+        label-width="100px"
+        style="width: 500px; margin-left:50px;"
+      >
         <el-form-item label="角色名称" prop="name">
           <el-input v-model="temp.name" :disabled="dialogStatus==='update'" />
         </el-form-item>
@@ -67,8 +91,14 @@
           <el-input v-model="temp.description" type="textarea" :autosize="{ minRows: 2, maxRows: 5}" />
         </el-form-item>
         <el-form-item label="权限级别">
-          <el-tree ref="premissionsTree" :data="allPermissions" :props="defaultProps" show-checkbox node-key="name"
-            class="permission-tree" />
+          <el-tree
+            ref="premissionsTree"
+            :data="allPermissions"
+            :props="defaultProps"
+            show-checkbox
+            node-key="name"
+            class="permission-tree"
+          />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -199,7 +229,7 @@ export default {
           id: undefined,
           name: undefined,
           displayName: undefined,
-          isStatic:true,
+          isStatic: true,
           normalizedName: undefined,
           description: undefined,
           permissions: []
@@ -256,7 +286,7 @@ export default {
       this.$refs['dataForm'].validate(valid => {
         if (valid) {
           this.temp.normalizedName = this.temp.name.toUpperCase()
-          this.temp.permissions=this.$refs['premissionsTree'].getCheckedKeys()
+          this.temp.permissions = this.$refs['premissionsTree'].getCheckedKeys()
           createRole(this.temp).then(response => {
             const { result } = response
             this.list.unshift(result)
@@ -300,8 +330,8 @@ export default {
     setEditRolePermissions(id) {
       getRole(id).then(response => {
         const { permissions } = response.result
-        let res = []
-        for (let pName of permissions) {
+        const res = []
+        for (const pName of permissions) {
           res.push({
             name: pName
           })

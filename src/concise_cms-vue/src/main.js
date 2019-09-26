@@ -9,6 +9,8 @@ import './styles/element-variables.scss'
 
 import '@/styles/index.scss' // global css
 
+import '@/styles/nestable.scss' // nestable css
+
 import App from './App'
 import store from './store'
 import router from './router'

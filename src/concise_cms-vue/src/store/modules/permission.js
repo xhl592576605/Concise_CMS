@@ -1,4 +1,6 @@
 import { asyncRoutes, constantRoutes } from '@/router'
+import { deepOrderBy } from '@/utils'
+import { getAllAsyncRoutersMap } from '@/api/asyncRouter'
 
 /**
  * Use meta.role to determine if the current user has permission
@@ -11,6 +13,27 @@ function hasPermission(roles, route) {
   } else {
     return true
   }
+}
+
+/**
+ * order asyncRoute and give 'asyncRoute.meta.roles' value
+ * @param {*} asyncRoutes
+ * @param {*} allMap
+ */
+export function completeAssignmentAsyncRoute(asyncRoutes, allMap) {
+  asyncRoutes.forEach(item => {
+    const mapInfo = allMap.find(value => {
+      return value.name === item.name
+    })
+    if (mapInfo) {
+      item.order = mapInfo.order || 0
+      item.meta.roles = mapInfo.roles || []
+    } else {
+      item.order = 0
+      item.meta.roles = []
+    }
+    completeAssignmentAsyncRoute(item.children || [], allMap)
+  })
 }
 
 /**
@@ -49,14 +72,25 @@ const mutations = {
 const actions = {
   generateRoutes({ commit }, roles) {
     return new Promise(resolve => {
-      let accessedRoutes
-      if (roles.includes('admin'.toUpperCase())) {
-        accessedRoutes = asyncRoutes || []
-      } else {
-        accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
-      }
-      commit('SET_ROUTES', accessedRoutes)
-      resolve(accessedRoutes)
+      // 1. 获取异步路由
+      let accessedRoutes = asyncRoutes || []
+      // 2. 获取排序与角色映射
+      getAllAsyncRoutersMap().then(response => {
+        const { items } = response.result
+        // 3. 讲获取的排序与角色赋值异步路由
+        completeAssignmentAsyncRoute(accessedRoutes, items)
+      }).then(res => {
+        // 4. 根据排序的进行异步路由排序
+        accessedRoutes = deepOrderBy(accessedRoutes, ['order'], ['children'])
+        // 5. 角色过滤
+        if (roles.includes('admin'.toUpperCase())) {
+          accessedRoutes = accessedRoutes || []
+        } else {
+          accessedRoutes = filterAsyncRoutes(accessedRoutes, roles)
+        }
+        commit('SET_ROUTES', accessedRoutes)
+        resolve(accessedRoutes)
+      })
     })
   }
 }

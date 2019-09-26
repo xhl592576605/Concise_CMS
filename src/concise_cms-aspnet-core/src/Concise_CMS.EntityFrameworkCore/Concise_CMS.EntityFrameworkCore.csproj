@@ -8,6 +8,15 @@
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Migrations\20190919132603_Concise_CMS_AsyncRoute.cs" />
+    <Compile Remove="Migrations\20190919132603_Concise_CMS_AsyncRoute.Designer.cs" />
+    <Compile Remove="Migrations\20190922053645_Concise_CMS_AsyncRoute6.cs" />
+    <Compile Remove="Migrations\20190922053645_Concise_CMS_AsyncRoute6.Designer.cs" />
+    <Compile Remove="Migrations\20190923153909_Concise_CMS_AsyncRoute6.cs" />
+    <Compile Remove="Migrations\20190923153909_Concise_CMS_AsyncRoute6.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.2.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.4">
       <PrivateAssets>all</PrivateAssets>

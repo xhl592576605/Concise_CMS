@@ -17,6 +17,7 @@ using Concise_CMS.Identity;
 
 using Abp.AspNetCore.SignalR.Hubs;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace Concise_CMS.Web.Host.Startup
 {
@@ -36,7 +37,9 @@ namespace Concise_CMS.Web.Host.Startup
             // MVC
             services.AddMvc(
                 options => options.Filters.Add(new CorsAuthorizationFilterFactory(_defaultCorsPolicyName))
-            );
+            ).AddJsonOptions(
+            // JSON （延迟加载）避免循环依赖引用
+            options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
             IdentityRegistrar.Register(services);
             AuthConfigurer.Configure(services, _appConfiguration);
@@ -49,7 +52,8 @@ namespace Concise_CMS.Web.Host.Startup
                     _defaultCorsPolicyName,
                     builder => builder
                         .WithOrigins(
-                            // App:CorsOrigins in appsettings.json can contain more than one address separated by comma.
+                            // App:CorsOrigins in appsettings.json can contain more than one address
+                            // separated by comma.
                             _appConfiguration["App:CorsOrigins"]
                                 .Split(",", StringSplitOptions.RemoveEmptyEntries)
                                 .Select(o => o.RemovePostFix("/"))
@@ -76,7 +80,7 @@ namespace Concise_CMS.Web.Host.Startup
                     Type = "apiKey"
                 });
                 options.CustomSchemaIds(type => type.FullName); // 解决相同类名会报错的问题
-               // options.IncludeXmlComments(Path.Combine(Directory.GetCurrentDirectory(), "Concise_CMS.Application.xml"));
+                                                                // options.IncludeXmlComments(Path.Combine(Directory.GetCurrentDirectory(), "Concise_CMS.Application.xml"));
             });
 
             // Configure Abp and Dependency Injection
@@ -99,7 +103,6 @@ namespace Concise_CMS.Web.Host.Startup
             app.UseAuthentication();
 
             app.UseAbpRequestLocalization();
-
 
             app.UseSignalR(routes =>
             {
@@ -125,7 +128,7 @@ namespace Concise_CMS.Web.Host.Startup
                 options.SwaggerEndpoint(_appConfiguration["App:ServerRootAddress"].EnsureEndsWith('/') + "swagger/v1/swagger.json", "Concise_CMS API V1");
                 options.IndexStream = () => Assembly.GetExecutingAssembly()
                     .GetManifestResourceStream("Concise_CMS.Web.Host.wwwroot.swagger.ui.index.html");
-               // options.InjectJavascript("Concise_CMS.Web.Host.wwwroot.swagger.ui.swagger_translator.js");
+                // options.InjectJavascript("Concise_CMS.Web.Host.wwwroot.swagger.ui.swagger_translator.js");
             }); // URL: /swagger
         }
     }
